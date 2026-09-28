@@ -110,17 +110,11 @@ Please follow the [style guide](./AGENTS.md#style-guide).
 
 ### Setting up a debugger
 
-Bun debugging is rough around the edges. The most reliable approach is to run MiMoCode manually with `bun run --inspect=<url> dev ...` and attach your debugger to that URL. Other methods can map breakpoints incorrectly, at least in VSCode.
+Bun debugging is rough around the edges. The reliable approach is to run MiMoCode with the inspector flag and **attach** a CDP client to that URL:
 
-Tips:
-
-- Debug the server and the TUI separately:
-  - Server: `bun run --inspect=ws://localhost:6499/ --cwd packages/opencode ./src/index.ts serve --port 4096`, then attach the TUI with `mimo attach http://localhost:4096`
-  - TUI: `bun run --inspect=ws://localhost:6499/ --cwd packages/opencode --conditions=browser ./src/index.ts`
-- `--inspect-wait` / `--inspect-brk` may suit your workflow better than `--inspect`.
-- Instead of repeating the flag, `export BUN_OPTIONS=--inspect=ws://localhost:6499/`.
-
-VSCode users can start from [.vscode/launch.example.json](.vscode/launch.example.json), which attaches to the inspector URL above. Avoid `"request": "launch"` configurations and the `JavaScript Debug Terminal`; both tend to misplace breakpoints.
+- Server: `bun run --inspect=ws://localhost:6499/ --cwd packages/opencode ./src/index.ts serve --port 4096`, then attach the TUI with `mimo attach http://localhost:4096`
+- TUI: `bun run --inspect=ws://localhost:6499/ --cwd packages/opencode --conditions=browser ./src/index.ts`
+- Instead of repeating the flag, `export BUN_OPTIONS=--inspect=ws://localhost:6499/`. `--inspect-wait` / `--inspect-brk` also work.
 
 ## Pull request expectations
 
