@@ -1,4 +1,10 @@
 #!/usr/bin/env bun
+// Build packages/opencode TUI binaries (and, when MIMOCODE_RELEASE is set,
+// upload them — GitHub Release via gh, Xiaomi FDS via ../../script/fds-upload.ts).
+// Called by script/release.ts and bun run build:local.
+//
+// Channels touched here: GitHub Release + FDS. npm is script/publish.ts.
+// Release env: see script/release.ts (GH_REPO, MIMO_FDS_AK/SK, MIMOCODE_*).
 
 import { $ } from "bun"
 import fs from "fs"
@@ -298,7 +304,7 @@ if (Script.release) {
   // script reads from there). Skipped when credentials are absent so local
   // release builds still work.
   if (process.env.MIMO_FDS_AK && process.env.MIMO_FDS_SK) {
-    const { uploadFile } = await import("./fds-upload.ts")
+    const { uploadFile } = await import("../../../script/fds-upload.ts")
     const archives = fs.readdirSync("dist").filter((f) => f.endsWith(".zip") || f.endsWith(".tar.gz"))
     for (const file of archives) {
       await uploadFile(`dist/${file}`, `releases/v${Script.version}/${file}`)
