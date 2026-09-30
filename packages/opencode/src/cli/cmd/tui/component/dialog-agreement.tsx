@@ -7,10 +7,13 @@ import { useTheme } from "@tui/context/theme"
 import { useLanguage } from "@tui/context/language"
 import { useDialog, type DialogContext } from "@tui/ui/dialog"
 
-export const FREE_AGREEMENT_KEY = "free_agreement_accepted"
+/** One-time product ToS/privacy acknowledgment, shown on first launch. */
+export const AGREEMENT_KEY = "agreement_accepted"
 
-// Model IDs that count as "free" and require the one-time agreement.
-export const FREE_MODEL_IDS = new Set(["mimo-auto", "mimo-free"])
+/** True when the TUI should present the one-time ToS/privacy dialog. */
+export function shouldShowAgreement(accepted: unknown): boolean {
+  return !accepted
+}
 
 const TERMS_URL = "https://platform.xiaomimimo.com/docs/terms/user-agreement"
 const PRIVACY_URL = "https://privacy.mi.com/XiaomiMiMoPlatform"
