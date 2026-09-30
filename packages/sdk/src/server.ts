@@ -1,6 +1,6 @@
 import launch from "cross-spawn"
 import { type Config } from "./gen/types.gen.js"
-import { stop, bindAbort } from "../process.js"
+import { stop, bindAbort } from "./process.js"
 
 export type ServerOptions = {
   hostname?: string
@@ -35,7 +35,7 @@ export async function createOpencodeServer(options?: ServerOptions) {
   const proc = launch(`opencode`, args, {
     env: {
       ...process.env,
-      OPENCODE_CONFIG_CONTENT: JSON.stringify(options.config ?? {}),
+      MIMOCODE_CONFIG_CONTENT: JSON.stringify(options.config ?? {}),
     },
   })
   let clear = () => {}
@@ -119,7 +119,7 @@ export function createOpencodeTui(options?: TuiOptions) {
     stdio: "inherit",
     env: {
       ...process.env,
-      OPENCODE_CONFIG_CONTENT: JSON.stringify(options?.config ?? {}),
+      MIMOCODE_CONFIG_CONTENT: JSON.stringify(options?.config ?? {}),
     },
   })
 
